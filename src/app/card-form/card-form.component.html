@@ -1,14 +1,53 @@
-<form [formGroup]="cardForm" (ngSubmit)="onSubmit()"> 
-  <app-input [control]="cardForm.get('name')" [label]="'Name'"></app-input>
-  <app-input [control]="cardForm.get('cardNumber')" [label]="'Card Number'"></app-input>
-  <app-input [control]="cardForm.get('expiration')" [label]="'Expiration'"></app-input>
-  <app-input [control]="cardForm.get('securityCode')" [label]="'Security Code'"></app-input>
-  <button class="button is-primary" [disabled]="cardForm.invalid" type="submit">Submit</button>
-</form>
-<hr>
-<br>
-<div>Form Contents: {{ cardForm.value | json }}</div>
-<br>
-<div>Form is valid: {{ cardForm.valid }}</div>
-<br>
-<div>Errors around name: {{ cardForm.controls.name.errors | json }}</div>
+<div class="columns">
+  <div class="column">
+    <app-card 
+      [name]="cardForm.controls.name.value" 
+      [cardNumber]="cardForm.controls.cardNumber.value"
+      [expiration]="cardForm.controls.expiration.value">
+    </app-card>
+  </div>
+  
+  <div class="column">
+    <form [formGroup]="cardForm" (ngSubmit)="onSubmit()">
+      <app-input 
+        label="Name" 
+        [control]="cardForm.get('name')"
+        [placeholder]="'min 3 characters'">
+        
+      </app-input>
+      <app-input 
+        label="Card Number" 
+        [control]="cardForm.get('cardNumber')" 
+        [mask]="'0000-0000-0000-0000'"
+        [placeholder]="'0000-0000-0000-0000'">
+      </app-input>
+      <div class="columns">
+        <div class="column">
+          <app-input 
+            label="Expiration" 
+            [control]="cardForm.get('expiration')"
+            [placeholder]="'MM/YY'">
+          </app-input>
+        </div>
+        <div class="column">
+          <app-input 
+            label="Security Code" 
+            [control]="cardForm.get('securityCode')" 
+            [mask]="'000'"
+            [placeholder]="'000'">
+          </app-input>
+        </div>
+      </div>
+      <div class="buttons">
+        <button class="button is-primary" [disabled]="cardForm.invalid" type="submit">
+          Submit
+        </button>
+        <button class="button is-warning" type="button" (click)="onResetClick()">
+          Reset
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+
